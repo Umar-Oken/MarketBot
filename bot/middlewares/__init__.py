@@ -1,0 +1,1 @@
+from bot.middlewares.join_required_middleware import JoinChannelGroupMiddleware
