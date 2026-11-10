@@ -1,3 +1,5 @@
+from html import escape
+
 from aiogram import F, Router
 from aiogram.types import Message
 
@@ -68,10 +70,12 @@ async def users_menu_handler(message: Message) -> None:
     ]
     
     for user in users[:20]:
-        username = f"@{user.first_name}" if user.first_name else "–"
-        phone = user.phone or "–"
+        first_name = escape(user.first_name or "")
+        last_name = escape(user.last_name or "")
+        username = escape(f"@{user.first_name}") if user.first_name else "–"
+        phone = escape(user.phone or "–")
         lines.append(
-            f"\n📱 <b>{user.first_name} {user.last_name}</b>\n"
+            f"\n📱 <b>{first_name} {last_name}</b>\n"
             f"   📞 {phone}\n"
             f"   💬 {username}\n"
             f"   📅 {user.created_at.strftime('%d.%m.%Y')}"

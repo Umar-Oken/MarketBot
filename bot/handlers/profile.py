@@ -1,3 +1,5 @@
+from html import escape
+
 from aiogram import F, Router
 from aiogram.types import Message
 from sqlalchemy import select
@@ -42,8 +44,8 @@ async def profile_handler(message: Message) -> None:
 
     profile_text = (
         t('profile.header', lang) + "\n"
-        + f"{t('profile.field_name', lang)}: <code>{user.first_name} {user.last_name}</code>\n"
-        + f"{t('profile.field_phone', lang)}: <code>{user.phone}</code>\n"
+        + f"{t('profile.field_name', lang)}: <code>{escape(user.first_name or '')} {escape(user.last_name or '')}</code>\n"
+        + f"{t('profile.field_phone', lang)}: <code>{escape(user.phone or '')}</code>\n"
         + f"{t('profile.field_username', lang)}: {username}\n"
         + f"{t('profile.field_registration', lang)}: {registration_date}\n"
         + f"{t('profile.field_orders', lang)}: {orders_count}"
@@ -54,4 +56,3 @@ async def profile_handler(message: Message) -> None:
         reply_markup=main_menu_keyboard(lang),
         parse_mode="HTML",
     )
-
